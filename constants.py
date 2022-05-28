@@ -1,6 +1,6 @@
 doc = """Usage:
   wallet.py new
-  wallet.py address
+  wallet.py list
   wallet.py transfer
 
 Options:
