@@ -13,4 +13,18 @@ pip3 install -r requirements.txt
 chmod 777 ./wallet.py
 ```
 
-3. Enjoy it
+## Usage
+1. Create new wallet
+```sh
+./wallet.py new
+```
+
+2. Get wallet address
+```sh
+./wallet.py address
+```
+
+3. Transfer Token
+```sh
+./wallet.py transfer
+```
