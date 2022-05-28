@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 doc = """Usage:
   wallet.py new
   wallet.py address
