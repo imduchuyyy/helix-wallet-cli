@@ -11,7 +11,7 @@ from constants import *
 from helper import *
 
 def print_hello_text():
-    print(BOLD + GRN + "\n   [ Mini Cool Wallet ] - by @terry.h \n" + CEND + "\n")
+    print(BOLD + GRN + "\n   [ Mini Cool Wallet ] - by @terry.h \n" + CEND)
 
 def get_wallet_handler():
     try:
