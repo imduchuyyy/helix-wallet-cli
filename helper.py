@@ -75,7 +75,7 @@ def transfer_token(token_info, address, private_key, receiver_address, amount):
     amount = int(amount * (10 ** int(token_info["decimals"])))
     nonce = w3.eth.getTransactionCount(address)
 
-    transaction = token.functions.transfer(receiver_address, amount).buildTransaction({'nonce': nonce, 'gas': 70000, 'gasPrice': w3.toWei('10', 'gwei'),})
+    transaction = token.functions.transfer(to_checksum_address(receiver_address), amount).buildTransaction({'nonce': nonce, 'gas': 70000, 'gasPrice': w3.toWei('10', 'gwei'),})
 
     signed_txn = w3.eth.account.signTransaction(transaction, private_key=private_key)
     w3.eth.sendRawTransaction(signed_txn.rawTransaction)
