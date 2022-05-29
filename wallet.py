@@ -35,49 +35,49 @@ def get_wallet_handler():
     try:
         wallet = get_wallet_encrypt()
         checksum_address = to_checksum_address("0x" + wallet["address"])
-        print(BOLD + CCYAN + "\tWallet Address: " + CEND, end='')
-        type_writer(GRN + checksum_address  + CEND + "\n", NORMAL_TEXT_TIME)
+        print(BOLD + CBLINK + "\tWallet Address: " + CEND, end='')
+        type_writer(CBLINK + checksum_address  + CEND + "\n", NORMAL_TEXT_TIME)
     except:
         type_writer(BOLD + CRED + "\tNo Wallet Found" + CEND + "\n", NORMAL_TEXT_TIME)
         return
 
 
 def new_wallet_handler():
-    type_writer(BOLD + CCYAN + "\tCreate New Wallet\n" + CEND , NORMAL_TEXT_TIME)
     priv = secrets.token_hex(32) 
     private_key = "0x" + priv
     account = Account.from_key(private_key)
-    print(BOLD + CBLINK + "\t\tNew Wallet: " + CEND, end='')
+    print(BOLD + CBLINK + "\tNew Wallet: " + CEND, end='')
 
     type_writer(account.address, NORMAL_TEXT_TIME)
 
-    print(BOLD + CYELLOW + "\n\t\t> " + CEND + BOLD + CBLINK + "Enter Password: ", end='')
+    print(BOLD + CYELLOW + "\n\t> " + CEND + BOLD + CBLINK + "Enter Password: " + CEND, end='')
     password = getpass("")
 
-    print(BOLD + CYELLOW + "\n\t\t> " + CEND + BOLD + CBLINK + "Confirm Password: ", end='')
+    print(BOLD + CYELLOW + "\n\t> " + CEND + BOLD + CBLINK + "Confirm Password: " + CEND, end='')
     confirm_password = getpass("")
 
-    if password != confirm_password: 
-        type_writer(BOLD + CRED + "\n\tPassword does not match\n" + CEND, NORMAL_TEXT_TIME)
-        return
+    while password != confirm_password:
+        type_writer(BOLD + CRED + "\t\tPassword does not match" + CEND, NORMAL_TEXT_TIME)
+        print(BOLD + CYELLOW + "\n\t> " + CEND + BOLD + CBLINK + "Confirm Password: " + CEND, end='')
+        confirm_password = getpass("")
 
     create_new_key(private_key, password)
 
-    type_writer(BOLD + GRN + "\n\tNew Wallet Created !!! \n" + CEND + "\n", NORMAL_TEXT_TIME)
+    type_writer(BOLD + GRN + "\n\t\tNew Wallet Created !!! \n" + CEND + "\n", NORMAL_TEXT_TIME)
 
 def print_token_info(token_info):
-    type_writer(BOLD + CCYAN + "\n\t\tToken Found:" + CEND + "\n", NORMAL_TEXT_TIME)
-    print(BOLD + "\t\t\tToken Address: " + CEND, end="")
-    type_writer(GRN + token_info["address"] + CEND + "\n", NORMAL_TEXT_TIME)
-    print(BOLD + "\t\t\tToken Name: " + CEND, end="")
-    type_writer(GRN + token_info["name"] + CEND + "\n", NORMAL_TEXT_TIME)
-    print(BOLD + "\t\t\tToken Symbol: " + CEND, end="")
-    type_writer(GRN + token_info["symbol"] + CEND + "\n", NORMAL_TEXT_TIME)
-    print(BOLD + "\t\t\tToken Decimals: " + CEND, end="")
-    type_writer(GRN + token_info["decimals"] + CEND + "\n", NORMAL_TEXT_TIME)
-    print(BOLD + "\t\t\tBalance: " + CEND, end="")
+    type_writer(BOLD + CBLINK + "\n\tToken Found:" + CEND + "\n", NORMAL_TEXT_TIME)
+    print(BOLD + "\t\tToken Address: " + CEND, end="")
+    type_writer(CBLINK + token_info["address"] + CEND + "\n", NORMAL_TEXT_TIME)
+    print(BOLD + "\t\tToken Name: " + CEND, end="")
+    type_writer(CBLINK + token_info["name"] + CEND + "\n", NORMAL_TEXT_TIME)
+    print(BOLD + "\t\tToken Symbol: " + CEND, end="")
+    type_writer(CBLINK + token_info["symbol"] + CEND + "\n", NORMAL_TEXT_TIME)
+    print(BOLD + "\t\tToken Decimals: " + CEND, end="")
+    type_writer(CBLINK + token_info["decimals"] + CEND + "\n", NORMAL_TEXT_TIME)
+    print(BOLD + "\t\tBalance: " + CEND, end="")
     if float(token_info["balance"]) > 0: 
-        type_writer(GRN + token_info["balance"] + CEND + "\n", NORMAL_TEXT_TIME)
+        type_writer(CBLINK + token_info["balance"] + CEND + "\n", NORMAL_TEXT_TIME)
     else: 
         type_writer(CRED + token_info["balance"] + CEND + "\n", NORMAL_TEXT_TIME)
 
@@ -91,7 +91,7 @@ def unlock_wallet(wallet):
             key = decrypt_wallet(wallet, password)
             is_correct_password = True
         except:
-            type_writer(BOLD + CRED + "\t\tWrong password" + CEND, NORMAL_TEXT_TIME)
+            type_writer(BOLD + CRED + "\t\t\tWrong password" + CEND, NORMAL_TEXT_TIME)
 
     return key
 
@@ -99,28 +99,26 @@ def unlock_wallet(wallet):
 def transfer_handler():
     if not check_wallet():
         return
-    type_writer(BOLD + CCYAN + "\tTransfer Token" + CEND, NORMAL_TEXT_TIME)
-
-    print(BOLD + CYELLOW + "\n\t\t> " + CEND + BOLD + CBLINK + "Token Address (Default is Native token): " + CEND, end='')
+    print(BOLD + CYELLOW + "\t> " + CEND + BOLD + CBLINK + "Token Address (Default is Native token): " + CEND, end='')
     token_address = input()
 
     wallet = get_wallet_encrypt()
 
-    type_writer(BOLD + CCYAN +   "\n\t\tFetching Token Info ... " + CEND , NORMAL_TEXT_TIME)
+    type_writer(BOLD + GRN +   "\n\tFetching Token Info ... " + CEND , NORMAL_TEXT_TIME)
     checksum_address = to_checksum_address("0x" + wallet["address"])
 
     try:
         token_info = get_token_info(checksum_address, token_address)
         print_token_info(token_info)
     except: 
-        print(BOLD + CRED + "\n\t\tToken Not Found")
+        print(BOLD + CRED + "\n\tToken Not Found")
         return
 
 
-    print(BOLD + CYELLOW + "\n\t\t> " + CEND + BOLD + CBLINK + "Receiver Address: " + CEND, end='')
+    print(BOLD + CYELLOW + "\n\t> " + CEND + BOLD + CBLINK + "Receiver Address: " + CEND, end='')
     receiver_address = input()
 
-    print(BOLD + CYELLOW + "\n\t\t> " + CEND + BOLD + CBLINK + "Amount: " + CEND, end='')
+    print(BOLD + CYELLOW + "\t> " + CEND + BOLD + CBLINK + "Amount: " + CEND, end='')
     amount = input()
 
     key = unlock_wallet(wallet)
@@ -130,10 +128,10 @@ def transfer_handler():
             hash = transfer_eth(checksum_address, key, receiver_address, float(amount))
         else:
             hash = transfer_token(token_info, checksum_address, key, receiver_address, float(amount))
-        print(BOLD + GRN + "\n\t\t\tTransaction Success: " + CEND, end="")
+        print(BOLD + GRN + "\n\tTransaction Success: " + CEND, end="")
         type_writer(GRN + str(hash.hex()) + CEND + "\n", NORMAL_TEXT_TIME)
     except Exception as e:
-        print(BOLD + CRED + "\n\t\t\tTransaction Fail: " + CEND, end="")
+        print(BOLD + CRED + "\n\tTransaction Fail: " + CEND, end="")
         type_writer(CRED + str(e) + CEND + "\n", NORMAL_TEXT_TIME)
 
 
@@ -144,7 +142,9 @@ def main():
 
     while True:
         print (BOLD + CYELLOW + ">> " + CEND, end="")
+        print (BOLD, end="")
         action = input()
+        print (CEND, end="")
 
         if action == "address":
             get_wallet_handler()

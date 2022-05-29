@@ -9,6 +9,7 @@ import web3
 from constants import *
 
 provider = Web3.HTTPProvider('https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62')
+provider = Web3.HTTPProvider('https://data-seed-prebsc-1-s1.binance.org:8545/')
 w3 = Web3(provider)
 
 def type_writer(message, delay_time):
@@ -86,7 +87,7 @@ def transfer_eth(address, private_key, receiver_address, amount):
     nonce = w3.eth.getTransactionCount(address)
     tx = {
         'nonce': nonce,
-        'to': receiver_address,
+        'to': to_checksum_address(receiver_address),
         'value': w3.toWei(amount, 'ether'),
         'gas': 2000000,
         'gasPrice': w3.toWei('10', 'gwei')
