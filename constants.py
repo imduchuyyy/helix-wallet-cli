@@ -5,7 +5,6 @@ Usage:
   address
   transfer
   reset
-  new 
 
 """
 
