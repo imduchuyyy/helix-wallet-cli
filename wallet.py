@@ -28,8 +28,8 @@ def print_header_text():
     print(BOLD + CCYAN + "\t\t\t----------------------------------------" + CEND)
 
 def print_footer_text():
-    type_writer(BOLD + CCYAN + "\tDonate ♥ " + CEND, FOOTER_TEXT_TIME)
-    type_writer(BOLD + CRED + "0x094C569ed04f3d93Ac8656e5cf2522381E24D57D" + CEND, FOOTER_TEXT_TIME)
+    print(BOLD + CCYAN + "\tDonate ♥: " + CEND, end="")
+    type_writer(GRN + "0x094C569ed04f3d93Ac8656e5cf2522381E24D57D" + CEND, FOOTER_TEXT_TIME)
 
 def get_wallet_handler():
     try:
