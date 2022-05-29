@@ -10,11 +10,18 @@ from getpass import getpass
 from constants import *
 from helper import *
 
+def check_wallet():
+    if not is_exist_wallet():
+        type_writer(BOLD + CRED + "\tNo Wallet Found" + CEND + "\n", 0.01)
+        return False
+    return True
+
+
 def print_hello_text():
     print(BOLD + CCYAN + "\t\t\t\t----------------------------------------" + CEND)
     print(BOLD + CCYAN + "\t\t\t\t-                                      -" + CEND)
     print(BOLD + CCYAN + "\t\t\t\t-  [" + CEND, end="")
-    type_writer(BOLD + CYELLOW + "Mini Cool Wallet" + CEND, 0.03)
+    type_writer(BOLD + GRN + "Mini Cool Wallet" + CEND, 0.03)
     print(BOLD + CCYAN + "] - by" + CEND, end="")
     type_writer(BOLD + CRED + "@Terry.h" + CEND, 0.03)
     print(BOLD + CCYAN + " -" + CEND)
@@ -25,10 +32,10 @@ def get_wallet_handler():
     try:
         wallet = get_wallet_encrypt()
         checksum_address = to_checksum_address("0x" + wallet["address"])
-        print(BOLD + CYELLOW + "\tWallet Found: ", end='')
+        print(BOLD + CYELLOW + "\tWallet Address: ", end='')
         type_writer(BOLD + GRN + checksum_address  + CEND + "\n", 0.01)
     except:
-        type_writer(BOLD + CRED + "\tNo Wallet" + CEND + "\n", 0.01)
+        type_writer(BOLD + CRED + "\tNo Wallet Found" + CEND + "\n", 0.01)
         return
 
 
@@ -87,6 +94,8 @@ def unlock_wallet(wallet):
 
 
 def transfer_handler():
+    if not check_wallet():
+        return
     type_writer(BOLD + CYELLOW + "\tTransfer Token" + CEND, 0.01)
 
     print(BOLD + CYELLOW + "\n\t\t> Token Address (Default is Native token): " + CEND, end='')
@@ -128,7 +137,7 @@ def transfer_handler():
 def main():
     print_hello_text()
 
-    if not is_exist_wallet():
+    if not check_wallet():
         new_wallet_handler()
 
     while True:
