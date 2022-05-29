@@ -9,7 +9,6 @@ import web3
 from constants import *
 
 provider = Web3.HTTPProvider('https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62')
-provider = Web3.HTTPProvider('https://data-seed-prebsc-1-s1.binance.org:8545/')
 w3 = Web3(provider)
 
 def type_writer(message, delay_time):
