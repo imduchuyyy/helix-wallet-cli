@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
-doc = """Usage:
-  wallet.py new
-  wallet.py address
-  wallet.py transfer
+doc = """
+Usage:
+  address
+  transfer
+  reset
 
-Options:
-  -h --help     Show this screen.
-  --version     Show version.
 """
 
 # Defining the colors of the text in bash

@@ -96,3 +96,6 @@ def transfer_eth(address, private_key, receiver_address, amount):
     tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
 
     return tx_hash
+
+def is_exist_wallet():
+    return os.path.exists(".keypair.json")
