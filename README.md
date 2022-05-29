@@ -14,17 +14,22 @@ chmod 777 ./wallet.py
 ```
 
 ## Usage
-1. Create new wallet
+1. Run app
 ```sh
-./wallet.py new
+./wallet.py
 ```
 
 2. Get wallet address
 ```sh
-./wallet.py address
+>> address
 ```
 
 3. Transfer Token
 ```sh
-./wallet.py transfer
+>> transfer
+```
+
+3. Reset wallet
+```sh
+>> reset
 ```

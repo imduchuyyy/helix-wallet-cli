@@ -17,7 +17,7 @@ def check_wallet():
     return True
 
 
-def print_hello_text():
+def print_header_text():
     print(BOLD + CCYAN + "\t\t\t----------------------------------------" + CEND)
     print(BOLD + CCYAN + "\t\t\t-                                      -" + CEND)
     print(BOLD + CCYAN + "\t\t\t- " + CEND, end="")
@@ -27,6 +27,10 @@ def print_hello_text():
     print(BOLD + CCYAN + " -" + CEND)
     print(BOLD + CCYAN + "\t\t\t-                                      -" + CEND)
     print(BOLD + CCYAN + "\t\t\t----------------------------------------" + CEND)
+
+def print_footer_text():
+    type_writer(BOLD + CCYAN + "\tDonate ♥ " + CEND, FOOTER_TEXT_TIME)
+    type_writer(BOLD + CRED + "0x094C569ed04f3d93Ac8656e5cf2522381E24D57D" + CEND, FOOTER_TEXT_TIME)
 
 def get_wallet_handler():
     try:
@@ -135,8 +139,7 @@ def transfer_handler():
 
 
 def main():
-    print_hello_text()
-
+    print_header_text()
     if not check_wallet():
         new_wallet_handler()
 
@@ -150,9 +153,12 @@ def main():
             new_wallet_handler()
         elif action == "transfer":
             transfer_handler()
+        elif action == "exit":
+            break
         elif len(action) > 0:
             print(BOLD + CYELLOW + doc, end="")
 
+    print_footer_text()
     print("")
-
+    
 main()

@@ -6,6 +6,8 @@ Usage:
   transfer
   reset
 
+  exit
+
 """
 
 # Defining the colors of the text in bash
@@ -24,4 +26,5 @@ ERC20_ABI = """
 """
 
 HEADER_TEXT_TIME=0.02
+FOOTER_TEXT_TIME=0.01
 NORMAL_TEXT_TIME=0.01
