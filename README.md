@@ -1,5 +1,5 @@
-# Mini Cool Wallet
-Mini Cool Wallet is python script encrypt your private key. Unlike normal extension wallet, MCW can't connect to browser, so it can't be hack
+# Mini Cool Wallet - MCWallet
+MCWallet is python script encrypt your private key. Unlike normal extension wallet, MCWallet can't connect to browser, so it can't be hack
 
 ![alt text](https://github.com/bui-duc-huy/mini-cool-wallet/blob/main/assets/preview.jpg)
 
