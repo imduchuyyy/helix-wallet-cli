@@ -12,7 +12,7 @@ from helper import *
 
 def check_wallet():
     if not is_exist_wallet():
-        type_writer(BOLD + CRED + "\tNo Wallet Found" + CEND + "\n", NORMAL_TEXT_TIME)
+        type_writer(BOLD + CRED + "\Wallet Not Found" + CEND + "\n", NORMAL_TEXT_TIME)
         return False
     return True
 
