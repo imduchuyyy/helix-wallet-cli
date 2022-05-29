@@ -35,7 +35,7 @@ def get_wallet_handler():
     try:
         wallet = get_wallet_encrypt()
         checksum_address = to_checksum_address("0x" + wallet["address"])
-        print(BOLD + CYELLOW + "\tWallet Address: " + CEND, end='')
+        print(BOLD + CCYAN + "\tWallet Address: " + CEND, end='')
         type_writer(GRN + checksum_address  + CEND + "\n", NORMAL_TEXT_TIME)
     except:
         type_writer(BOLD + CRED + "\tNo Wallet Found" + CEND + "\n", NORMAL_TEXT_TIME)
@@ -43,7 +43,7 @@ def get_wallet_handler():
 
 
 def new_wallet_handler():
-    type_writer(BOLD + CYELLOW + "\tCreate New Wallet\n" + CEND , NORMAL_TEXT_TIME)
+    type_writer(BOLD + CCYAN + "\tCreate New Wallet\n" + CEND , NORMAL_TEXT_TIME)
     priv = secrets.token_hex(32) 
     private_key = "0x" + priv
     account = Account.from_key(private_key)
@@ -66,7 +66,7 @@ def new_wallet_handler():
     type_writer(BOLD + GRN + "\n\tNew Wallet Created !!! \n" + CEND + "\n", NORMAL_TEXT_TIME)
 
 def print_token_info(token_info):
-    type_writer(BOLD + CYELLOW + "\n\t\tToken Found:" + CEND + "\n", NORMAL_TEXT_TIME)
+    type_writer(BOLD + CCYAN + "\n\t\tToken Found:" + CEND + "\n", NORMAL_TEXT_TIME)
     print(BOLD + "\t\t\tToken Address: " + CEND, end="")
     type_writer(GRN + token_info["address"] + CEND + "\n", NORMAL_TEXT_TIME)
     print(BOLD + "\t\t\tToken Name: " + CEND, end="")
@@ -99,14 +99,14 @@ def unlock_wallet(wallet):
 def transfer_handler():
     if not check_wallet():
         return
-    type_writer(BOLD + CYELLOW + "\tTransfer Token" + CEND, NORMAL_TEXT_TIME)
+    type_writer(BOLD + CCYAN + "\tTransfer Token" + CEND, NORMAL_TEXT_TIME)
 
     print(BOLD + CYELLOW + "\n\t\t> " + CEND + BOLD + CBLINK + "Token Address (Default is Native token): " + CEND, end='')
     token_address = input()
 
     wallet = get_wallet_encrypt()
 
-    type_writer(BOLD + CYELLOW +   "\n\t\tFetching Token Info ... " + CEND , NORMAL_TEXT_TIME)
+    type_writer(BOLD + CCYAN +   "\n\t\tFetching Token Info ... " + CEND , NORMAL_TEXT_TIME)
     checksum_address = to_checksum_address("0x" + wallet["address"])
 
     try:
