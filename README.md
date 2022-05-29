@@ -33,3 +33,6 @@ chmod 777 ./wallet.py
 ```sh
 >> reset
 ```
+
+## Thanks for use
+Donate ♥  0x094C569ed04f3d93Ac8656e5cf2522381E24D57
