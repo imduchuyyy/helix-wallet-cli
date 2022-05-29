@@ -1,3 +1,2 @@
-docopt==0.6.2
 eth_account==0.5.7
 web3==5.28.0

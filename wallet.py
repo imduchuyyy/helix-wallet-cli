@@ -5,7 +5,6 @@ import os, time
 from os import walk
 import sys
 import secrets
-from docopt import docopt
 from getpass import getpass
 from constants import *
 from helper import *
