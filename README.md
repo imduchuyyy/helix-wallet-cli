@@ -37,4 +37,4 @@ chmod 777 ./wallet.py
 ```
 
 ## Thanks for use
-Donate ♥  <b>0x094C569ed04f3d93Ac8656e5cf2522381E24D57</b>
+Donate ♥  <b>0x094C569ed04f3d93Ac8656e5cf2522381E24D57D</b>
