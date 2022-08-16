@@ -6,7 +6,7 @@ from eth_account import Account
 import json
 from web3 import Web3
 import web3
-from constants import *
+from .constants import *
 
 provider = Web3.HTTPProvider('https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62')
 w3 = Web3(provider)
@@ -99,3 +99,7 @@ def transfer_eth(address, private_key, receiver_address, amount):
 
 def is_exist_wallet():
     return os.path.exists(".keypair.json")
+
+def print_result(title: str, message: str):
+    print(BOLD + title + ": " + CEND, end='')
+    print(message)
