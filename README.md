@@ -36,5 +36,9 @@ chmod 777 ./wallet.py
 >> reset
 ```
 
+## TODO
+1. Support tonardo cash
+2. Refactor code
+
 ## Thanks for use
 Donate ♥  <b>0x094C569ed04f3d93Ac8656e5cf2522381E24D57D</b>
