@@ -12,7 +12,7 @@ def create_keypair(keypair_file: str, force: bool, private_key: str):
     if keypair_file is None and not force:
         keypair_path = config.get_keypair_path()
         if os.path.isfile(keypair_path):
-            click.echo("Refusing to overwrite " + keypair_path+ " without --force flag")
+            click.echo("Refusing to overwrite " + keypair_path + " without --force flag")
             exit()
 
     if private_key is None:
