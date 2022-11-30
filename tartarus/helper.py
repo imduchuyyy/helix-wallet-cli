@@ -71,8 +71,9 @@ def get_token_info(wallet_address : str = '', token_address: str = '') -> dict:
         token_info["symbol"] = str(token.functions.symbol().call())
         token_info["decimals"] = str(token.functions.decimals().call())
         balance = str(token.functions.balanceOf(wallet_address).call() / 10 ** int(token_info["decimals"]))
-        print_result(f"Balance", f"{balance} {token_info['symbol']}")
         token_info["balance"] = balance
+
+    print_result(f"Balance", f"{balance} {token_info['symbol']}")
     return token_info
 
 
