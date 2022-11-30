@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
+import os
 
-doc = """
-Usage:
-  address
-  transfer
-  reset
+WALLET_FOLDER = ".tartarus-wallet"
+wallet_path = os.path.join(os.path.expanduser('~'), WALLET_FOLDER)
 
-  exit
-
-"""
+wallet_list_path = os.path.join(wallet_path, "wallet")
 
 # Defining the colors of the text in bash
 CBLINK = '\033[5m'
