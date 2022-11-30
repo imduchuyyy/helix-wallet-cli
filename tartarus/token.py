@@ -18,7 +18,7 @@ class Token():
             balance = str(float(self.w3.eth.get_balance(self.wallet_address)) / 10 ** 18)
         else:
             token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)
-            balance = str(token.functions.balanceOf(self.wallet_address).call() / 10 ** int(token_info["decimals"]))
+            balance = str(token.functions.balanceOf(self.wallet_address).call() / 10 ** self.get_decimal())
 
         return balance
     
@@ -27,4 +27,11 @@ class Token():
             return "ETH"
         else:
             token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)
-            return token.functions.symbol()
+            return token.functions.symbol().call()
+
+    def get_decimal(self) -> int:
+        if self.token_address == "0x0000000000000000000000000000000000000000":
+            return 18
+        else:
+            token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)
+            return token.functions.decimals().call()

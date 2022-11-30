@@ -9,10 +9,18 @@ from tartarus.token import Token
 @click.option('-t', '--token-address', 'token_address', help="Token address", default="Native token", show_default=True)
 def balance_handler(token_address: str):
     """get balance"""
-    if token_address == "Native token":
-        token_address = "0x0000000000000000000000000000000000000000"
     config = Config()
     wallet = Wallet(config.get_keypair_path())
+
+    if not wallet.is_wallet_exited():
+        Print.print_error("Wallet not found, please create wallet first")
+        print("")
+
+        quit()
+
+    if token_address == "Native token":
+        token_address = "0x0000000000000000000000000000000000000000"
+
     token = Token(config.get_url(), wallet.get_address(), token_address)
 
     balance = token.get_balance()
