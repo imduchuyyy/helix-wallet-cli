@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+from enum import EnumMeta, Enum
 
 WALLET_FOLDER = ".tartarus-wallet"
 WALLET_PATH = os.path.join(os.path.expanduser('~'), WALLET_FOLDER)
@@ -24,3 +25,34 @@ ERC20_ABI = """
 HEADER_TEXT_TIME=0.02
 FOOTER_TEXT_TIME=0.01
 NORMAL_TEXT_TIME=0.01
+
+
+class EnumDirectValueMeta(EnumMeta):
+    def __getattribute__(cls, name):
+        value = super().__getattribute__(name)
+        if isinstance(value, cls):
+            value = value.value
+        return value
+
+
+class BaseEnum(Enum, metaclass=EnumDirectValueMeta):
+    @classmethod
+    def all(cls, except_list=None):
+        if except_list is None:
+            except_list = []
+        return [c.value for c in cls if c.value not in except_list]
+
+    @classmethod
+    def keys(cls):
+        return [k.name for k in cls]
+
+    @classmethod
+    def has_value(cls, value):
+        return value in cls._value2member_map_
+
+
+class PrintType(BaseEnum):
+    INFO = "info"
+    ERROR = "error"
+    WARNING = "warning"
+    SUCCESS = "success"
