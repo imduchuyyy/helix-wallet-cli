@@ -38,14 +38,14 @@ class Token(object):
         return balance
 
     def get_symbol(self) -> str:
-        if self.token_address == "0x0000000000000000000000000000000000000000":
+        if self.token_address == ETH_NATIVE_ADDRESS:
             return "ETH"
         else:
             token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)
             return token.functions.symbol().call()
 
     def get_decimal(self) -> int:
-        if self.token_address == "0x0000000000000000000000000000000000000000":
+        if self.token_address == ETH_NATIVE_ADDRESS:
             return 18
         else:
             token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)

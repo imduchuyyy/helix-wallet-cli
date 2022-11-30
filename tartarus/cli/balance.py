@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 import click
-from tartarus.config import Config 
+from tartarus.config import Config
+from tartarus.constants import ETH_NATIVE_ADDRESS
 from tartarus.wallet import Wallet 
 from tartarus.print import Print
 from tartarus.token import Token
@@ -19,11 +20,11 @@ def balance_handler(token_address: str):
         quit()
 
     if token_address == "Native token":
-        token_address = "0x0000000000000000000000000000000000000000"
+        token_address = ETH_NATIVE_ADDRESS
 
     token = Token(config.get_url(), wallet.get_address(), token_address)
 
     balance = token.get_balance()
     symbol = token.get_symbol()
-    Print.print_success(balance + " " + symbol)
+    Print._out(message=balance + " " + symbol)
     print("")
