@@ -1,29 +1,42 @@
 #! /usr/bin/env python3
 import click
 import os
-from tartarus import wallet, config
+from getpass import getpass
+from tartarus.wallet import Wallet
+from tartarus.config import Config
+from tartarus.print import Print
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
-@click.option('-o', '--keypair-file', 'keypair_file', help="keypair file name")
-@click.option('-f', '--force', 'force', help="force overwrite wallet", is_flag=True)
-@click.option('-k', '--private-key', 'private_key', help="private key")
-def create_keypair(keypair_file: str, force: bool, private_key: str):
+def create_wallet():
     """create new keypair"""
-    if keypair_file is None and not force:
-        keypair_path = config.get_keypair_path()
-        if os.path.isfile(keypair_path):
-            click.echo("Refusing to overwrite " + keypair_path + " without --force flag")
-            exit()
+    config = Config()
+    wallet = Wallet(config.get_keypair_path())
 
-    if private_key is None:
-        private_key = click.prompt('Private key (empty for none)', type=str, default="", show_default=False)
+    if wallet.is_wallet_exited():
+        Print.print_warning("Wallet existed, do you want to override (y/n): ")
+        is_override = input()
 
-    password = click.prompt('Password', hide_input=True, type=str, default="", show_default=False)
-    confirm = click.prompt('Confirm Password', hide_input=True, type=str, default="", show_default=False)
+        if is_override != 'y':
+            quit()
 
-    if password != confirm:
-        click.echo("Password mismatch")
-        exit()
-
-    wallet.create_keypair(keypair_file, private_key, password)
+    Print.print_info("Private key (default for new wallet): ")
+    private_key = getpass("")
     
+    Print.print_info("Password (len >= 6): ")
+    password = getpass("")
+
+    while len(password) < 6:
+        Print.print_info("Password (len >= 6): ")
+        password = getpass("")
+
+    Print.print_info("Confirm password: ")
+    confirm_password = getpass("")
+
+    if confirm_password != password:
+        Print.print_error("Password mismatch")
+    else:
+        new_address = wallet.create_wallet(private_key, password, True)
+
+        Print.print_success("Create new wallet with address " + new_address)
+        print("")
+

@@ -2,9 +2,9 @@
 import os
 
 WALLET_FOLDER = ".tartarus-wallet"
-wallet_path = os.path.join(os.path.expanduser('~'), WALLET_FOLDER)
+WALLET_PATH = os.path.join(os.path.expanduser('~'), WALLET_FOLDER)
 
-wallet_list_path = os.path.join(wallet_path, "wallet")
+WALLET_LIST_PATH = os.path.join(WALLET_PATH, "wallet")
 
 # Defining the colors of the text in bash
 CBLINK = '\033[5m'
