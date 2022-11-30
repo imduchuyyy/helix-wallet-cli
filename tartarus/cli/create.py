@@ -3,6 +3,7 @@ import click
 import os
 from tartarus import wallet, config
 
+
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-o', '--keypair-file', 'keypair_file', help="keypair file name")
 @click.option('-f', '--force', 'force', help="force overwrite wallet", is_flag=True)

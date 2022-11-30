@@ -22,12 +22,12 @@ def set_config(url: str, keypair_file: str):
 
     config_json = config.get_config()
     if url is not None:
-        print(constants.BOLD + "Keypair path: " + constants.CEND, end='')
+        print(constants.BOLD + "RPC Url: " + constants.CEND, end='')
         print(url)
         config_json["url"] = url
     if keypair_file is not None:
-        print(constants.BOLD + "RPC Url: " + constants.CEND, end='')
-        print(url)
+        print(constants.BOLD + "Keypair path: " + constants.CEND, end='')
+        print(keypair_file)
         config_json["keypair_path"] = keypair_file
 
     config_path = os.path.join(constants.wallet_path, "config.json")
@@ -36,10 +36,12 @@ def set_config(url: str, keypair_file: str):
 
     print(constants.BOLD + "Config updated" + constants.CEND, end='')
 
+
 @click.group()
 def config_command():
     """config for wallet"""
     pass
+
 
 config_command.add_command(get_config, "get")
 config_command.add_command(set_config, "set")

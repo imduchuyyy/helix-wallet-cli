@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
-import sys, time, os
-from os import walk
+import sys, time
 from eth_account import Account
 import json
 from web3 import Web3
 import web3
-from .constants import *
+from tartarus.constants import *
 
 provider = Web3.HTTPProvider('https://mainnet.infura.io/v3/9e4bc49c44c34ac7ae3e5c34fe5e1d62')
 w3 = Web3(provider)
+
 
 def type_writer(message, delay_time):
     for char in message:
@@ -45,61 +45,86 @@ def get_wallet_by_index(index):
     wallets = get_wallets_list()
     return wallets[index - 1]
 
+
 def to_checksum_address(address):
     return Web3.toChecksumAddress(address)
 
 
-def get_token_info(wallet_address, token_address):
+def get_token_info(wallet_address : str = '', token_address: str = '') -> dict:
     token_info = {}
-
+    print_result("Wallet Address", wallet_address)
+    print_result("Token Address", token_address)
+    wallet_address = to_checksum_address(wallet_address)
     if len(token_address) == 0:
         token_info["address"] = "0x0000000000000000000000000000000000000000"
         token_info["name"] = "Ethereum"
         token_info["symbol"] = "ETH"
         token_info["decimals"] = "18"
-        token_info["balance"] = str(float(w3.eth.get_balance(wallet_address)) / 10 ** 18)
+        balance = str(float(w3.eth.get_balance(wallet_address)) / 10 ** 18)
+        print_result("Balance", balance + " ETH")
+        token_info["balance"] = str(float(balance) / 10 ** 18)
 
     else:
         token = w3.eth.contract(address=to_checksum_address(token_address), abi=ERC20_ABI)
-
         token_info["address"] = token_address
         token_info["name"] = str(token.functions.name().call())
         token_info["symbol"] = str(token.functions.symbol().call())
         token_info["decimals"] = str(token.functions.decimals().call())
-        token_info["balance"] = str(token.functions.balanceOf(wallet_address).call() / 10 ** int(token_info["decimals"]))
-
+        balance = str(token.functions.balanceOf(wallet_address).call() / 10 ** int(token_info["decimals"]))
+        print_result(f"Balance", f"{balance} {token_info['symbol']}")
+        token_info["balance"] = balance
     return token_info
 
-def transfer_token(token_info, address, private_key, receiver_address, amount):
-    token = w3.eth.contract(address=to_checksum_address(token_info["address"]), abi=ERC20_ABI)
-    amount = int(amount * (10 ** int(token_info["decimals"])))
-    nonce = w3.eth.getTransactionCount(address)
 
-    transaction = token.functions.transfer(to_checksum_address(receiver_address), amount).buildTransaction({'nonce': nonce, 'gas': 70000, 'gasPrice': w3.toWei('10', 'gwei'),})
+class TransferTarget(object):
+    def __init__(self, address=None, private_key=None, receiver_address=None, **kwargs):
+        self.address = address
+        self.checksum_address = to_checksum_address(address)
+        self.receiver_address = receiver_address
+        self.checksum_receiver_address = to_checksum_address(receiver_address)
+        self.private_key = private_key
+        self.token_info = kwargs.get('token_info')
 
-    signed_txn = w3.eth.account.signTransaction(transaction, private_key=private_key)
-    w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+    def transfer_eth(self, amount) -> hash:
+        try:
+            nonce = w3.eth.getTransactionCount(self.checksum_address)
+            tx = {
+                'nonce': nonce,
+                'to': self.checksum_receiver_address,
+                'value': w3.toWei(amount, 'ether'),
+                'gas': 2000000,
+                'gasPrice': w3.toWei('10', 'gwei')
+            }
+            signed_tx = w3.eth.account.sign_transaction(tx, self.private_key)
+            tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+            return tx_hash
+        except Exception as e:
+            print_result("Error", str(e))
 
-    return signed_txn.hash
+    def transfer_token(self, amount) -> hash:
+        try:
+            token = w3.eth.contract(address=to_checksum_address(self.token_info["address"]), abi=ERC20_ABI)
+            amount = int(int(amount) * (10 ** int(self.token_info["decimals"])))
+            nonce = w3.eth.getTransactionCount(self.checksum_address)
+            transaction_data = {
+                'nonce': nonce,
+                'gas': 70000,
+                'gasPrice': w3.toWei('10', 'gwei'),
+            }
+            transaction = token.functions.transfer(self.checksum_receiver_address, amount)\
+                .buildTransaction(transaction_data)
+            signed_txn = w3.eth.account.signTransaction(transaction, private_key=self.private_key)
+            w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+            return signed_txn.hash
+        except Exception as e:
+            print_result("Error", str(e))
 
-def transfer_eth(address, private_key, receiver_address, amount):
-    nonce = w3.eth.getTransactionCount(address)
-    tx = {
-        'nonce': nonce,
-        'to': to_checksum_address(receiver_address),
-        'value': w3.toWei(amount, 'ether'),
-        'gas': 2000000,
-        'gasPrice': w3.toWei('10', 'gwei')
-    }
-
-    signed_tx = w3.eth.account.sign_transaction(tx, private_key)
-    tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-
-    return tx_hash
 
 def is_exist_wallet():
     return os.path.exists(".keypair.json")
 
-def print_result(title: str, message: str):
-    print(BOLD + title + ": " + CEND, end='')
+
+def print_result(title: str = None, message: str = None):
+    if title:
+        print(BOLD + title + ": " + CEND, end='')
     print(message)

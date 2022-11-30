@@ -5,10 +5,17 @@ import secrets
 import json
 from tartarus import config, constants, helper
 
-def get_address(keypair_file: str) -> str:
-    return "hello"
+
+def get_address(keypair_path: str = None) -> str:
+    if not keypair_path:
+        keypair_path = config.get_keypair_path()
+    with open(keypair_path, "r") as f:
+        keypair_encrypted = json.load(f)
+    return keypair_encrypted["address"]
+
 
 def get_keypair(keypair_path: str) -> dict:
+    # get keypair from file
     try: 
         with open(keypair_path, "r") as f:
             keypair = json.load(f)
@@ -16,6 +23,19 @@ def get_keypair(keypair_path: str) -> dict:
         return keypair
     except:
         print("Keypair not exit")
+
+
+def get_private_key(password: str = '') -> str:
+    keypair_path = config.get_keypair_path()
+    with open(keypair_path, "r") as f:
+        keypair_encrypted = json.load(f)
+    try:
+        private_key = Account.decrypt(keypair_encrypted, password)
+        return private_key
+    except Exception as e:
+        helper.print_result(message="Wrong password")
+        exit()
+
 
 def print_address() -> None:
     keypair_path = config.get_keypair_path()
@@ -25,7 +45,7 @@ def print_address() -> None:
     helper.print_result("address", "0x" + keypair_encrypted["address"])
     
 
-def create_keypair(keypair_file: str, private_key: str, password: str):
+def create_keypair(keypair_file: str = None, private_key: str = '', password: str = '') -> None:
     if keypair_file is None:
         keypair_file = config.get_keypair_path()
     if len(private_key) < 32:
@@ -38,4 +58,3 @@ def create_keypair(keypair_file: str, private_key: str, password: str):
         outfile.write(json_object)
 
     helper.print_result("New keypair for address", account.address)
-    
