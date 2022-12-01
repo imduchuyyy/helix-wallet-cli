@@ -1,50 +1,43 @@
 from unittest import TestCase
-import pytest as pytest
-from unittest.mock import MagicMock, patch
+import pytest
 
 from tartarus.constants import ETH_NATIVE_ADDRESS
 from tartarus.token import Token
 
 
-def setUpModule(): pass
+@pytest.fixture
+def token_contract(w3, get_contract):
+    code = """
+@external
+@view
+def get_balance() -> uint256:
+    a: uint256 = self.balance
+    return a
+
+@external
+@payable
+def __default__():
+    pass
+    """
+    contract = get_contract(code, *[w3.eth.accounts[0]])
+    return contract
 
 
-def tearDownModule(): pass
+def test_get_balance_ETH(w3, token_contract):
+    url = 'https://some_url.com'  # mainnet
+    token_address = ETH_NATIVE_ADDRESS
+    value = 1337 * 10 ^ 18
+    w3.eth.send_transaction({"to": token_contract.address, "value": value})
+    assert token_contract.get_balance() == value
 
-
-class TestCoin(TestCase):
-
-    def setUp(self):
-        self.url = 'https://some_url.com'  # mainnet
-
-    def tearDown(self): pass
-
-    @patch('tartarus.token.Token.build_w3', MagicMock())
-    @patch('tartarus.token.Token.get_balance_native', MagicMock(return_value=311308790340449818330))
-    def test_get_balance_ETH(self):
-        wallet_address = '0x4e65175f05b4140a0747c29cce997cd4bb7190d4'
-        token_address = ETH_NATIVE_ADDRESS
-        t = Token(
-            url=self.url,
-            wallet_address=wallet_address,
-            token_address=token_address,
-        )
-        balance = t.get_balance()
-        assert balance == '311.3087903404498'
-
-    @patch('tartarus.token.Token.build_w3', MagicMock())
-    @patch('tartarus.token.Token.get_balance_non_native', MagicMock(return_value=311308790340449818330))
-    @patch('tartarus.token.Token.get_decimal', MagicMock(return_value=19))
-    def test_get_balance_non_native(self):
-        wallet_address = '0x4e65175f05b4140a0747c29cce997cd4bb7190d4'
-        token_address = '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9'  # AAVE
-        t = Token(
-            url=self.url,
-            wallet_address=wallet_address,
-            token_address=token_address,
-        )
-        balance = t.get_balance()
-        assert balance == '31.13087903404498'
+    t = Token(
+        w3=w3,
+        url=url,
+        wallet_address=token_contract.address,
+        token_address=token_address,
+    )
+    balance = t.get_balance()
+    assert balance == f'{value / 10 ** 18}'
 
 
 @pytest.mark.skip(reason='Call external service')

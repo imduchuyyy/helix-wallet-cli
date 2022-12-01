@@ -8,6 +8,10 @@ eth-account = "==0.5.7"
 web3 = "==5.28.0"
 click = "*"
 pytest= "*"
+eth-tester = "*"
+py-evm="*"
+vyper = "*"
+lark = "*"
 
 [dev-packages]
 

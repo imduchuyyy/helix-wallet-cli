@@ -10,31 +10,24 @@ def to_checksum_address(address):
 
 class Token(object):
     def __init__(self, url, wallet_address, token_address, **kwargs) -> None:
-        self.w3 = None
+        self.w3 = kwargs.get("w3", None)
         self.wallet_address = to_checksum_address(wallet_address)
         self.token_address = to_checksum_address(token_address)
 
-        self.build_w3(url)
+        self._build_w3(url)
 
-    def build_w3(self, url):
-        provider = Web3.HTTPProvider(url)
-        self.w3 = Web3(provider)
+    def _build_w3(self, url) -> None:
+        if self.w3 is None:
+            self.w3 = Web3(Web3.HTTPProvider(url))
 
     def get_balance(self) -> str:
         if self.token_address == ETH_NATIVE_ADDRESS:
-            balance = self.get_balance_native()
+            balance = self.w3.eth.get_balance(self.wallet_address)
             balance = str(float(balance) / 10 ** 18)
         else:
-            balance = self.get_balance_non_native()
+            token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)
+            balance = token.functions.balanceOf(self.wallet_address).call()
             balance = str(balance / 10 ** self.get_decimal())
-        return balance
-
-    def get_balance_native(self) -> int:
-        return self.w3.eth.getBalance(self.wallet_address)
-
-    def get_balance_non_native(self) -> int:
-        token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)
-        balance = token.functions.balanceOf(self.wallet_address).call()
         return balance
 
     def get_symbol(self) -> str:
