@@ -8,9 +8,18 @@ from tartarus.token import Token
 @pytest.fixture
 def token_contract(w3, get_contract):
     code = """
+symbol: public(String[32])
+decimals: public(uint256)
+
 @external
 @view
 def get_balance() -> uint256:
+    a: uint256 = self.balance
+    return a
+
+@external
+@view
+def symbol() -> uint256:
     a: uint256 = self.balance
     return a
 
