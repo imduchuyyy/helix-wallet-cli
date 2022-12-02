@@ -5,8 +5,10 @@ function _() {
     local AH=$(cd "$SH/.." && pwd)
     cd $SH
     # prepare :pipenv binary
-    if [[ $OSTYPE == 'darwin'* ]]; then
-      pipenv="pipenv"
+    if [[ -f "$HOME/.pyenv/shims/pipenv" ]]; then
+      [ -x pipenv ] && pipenv='pipenv' || pipenv="$HOME/.pyenv/shims/pipenv"
+    elif [[ -f "/opt/homebrew/bin/pipenv" ]]; then
+      pipenv="/opt/homebrew/bin/pipenv"
     else
       [ -x pipenv ] && pipenv='pipenv' || pipenv="$HOME/.pyenv/shims/pipenv"
     fi
