@@ -57,6 +57,11 @@ You can change url and keypair_path for your own config in `~/.tartarus-wallet/c
 pytest -s
 ```
 
+or 
+```sh
+./quicktest.sh
+```
+
 ## TODO
 1. Support tornado cash
 2. Refactor code

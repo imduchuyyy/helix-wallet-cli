@@ -1,2 +1,4 @@
 __pycache__/
 *.keypair.json
+.idea/
+tmp/

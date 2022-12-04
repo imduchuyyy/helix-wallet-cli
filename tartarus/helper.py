@@ -53,7 +53,7 @@ def get_token_info(wallet_address, token_address):
     token_info = {}
 
     if len(token_address) == 0:
-        token_info["address"] = "0x0000000000000000000000000000000000000000"
+        token_info["address"] = ETH_NATIVE_ADDRESS
         token_info["name"] = "Ethereum"
         token_info["symbol"] = "ETH"
         token_info["decimals"] = "18"
