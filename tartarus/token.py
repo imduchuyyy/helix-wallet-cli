@@ -43,3 +43,21 @@ class Token(object):
         else:
             token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)
             return token.functions.decimals().call()
+
+    def create_transfer_transaction(self, receiver_address: str, amount: float) -> dict: 
+        if self.token_address == ETH_NATIVE_ADDRESS:
+            transaction = dict(
+                nonce=self.w3.eth.getTransactionCount(self.wallet_address),
+                gasPrice=self.w3.eth.gas_price,
+                to=receiver_address,
+                value=self.w3.toWei(amount, 'ether'),
+                gas=21000,
+                chainId=self.w3.eth.chainId
+            )
+        else:
+            token = self.w3.eth.contract(address=self.token_address, abi=constants.ERC20_ABI)
+            amount = int(amount * (10 ** self.get_decimal()))
+            nonce = self.w3.eth.getTransactionCount(self.wallet_address)
+            transaction = token.functions.transfer(self.wallet_address, amount).buildTransaction({'nonce': nonce, 'gas': 70000, 'gasPrice': self.w3.eth.gas_price,})
+
+        return transaction
