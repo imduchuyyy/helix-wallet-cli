@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import click
 from tartarus.config import Config
-from tartarus.constants import ETH_NATIVE_ADDRESS
+from tartarus.constants import ETH_NATIVE_ADDRESS, PrintType
 from tartarus.wallet import Wallet 
 from tartarus.print import Print
 from tartarus.token import Token
@@ -14,7 +14,7 @@ def balance_handler(token_address: str):
     wallet = Wallet(config.get_keypair_path())
 
     if not wallet.is_wallet_exited():
-        Print.print_error("Wallet not found, please create wallet first")
+        Print(PrintType.ERROR)._out("Wallet not found, please create wallet first")
         print("")
 
         quit()

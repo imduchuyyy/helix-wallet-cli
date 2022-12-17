@@ -13,9 +13,9 @@ def get_config():
     """Get config"""
     config_data = config.get_config()
 
-    Print.print_success("URL: " + config_data["url"])
+    Print()._out("URL: " + config_data["url"])
     print("")
-    Print.print_success("Keypair Path: " + config_data["keypair_path"])
+    Print()._out("Keypair Path: " + config_data["keypair_path"])
     print("")
 
 
