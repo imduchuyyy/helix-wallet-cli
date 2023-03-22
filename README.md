@@ -67,4 +67,4 @@ or
 2. Refactor code
 
 ## Thanks for use
-Donate ♥  <b>0x094C569ed04f3d93Ac8656e5cf2522381E24D57D</b>
+Donate ♥  <b>[terryyy.eth](https://etherscan.io/address/0x4FFF0f708c768a46050f9b96c46C265729D1a62f)</b>
