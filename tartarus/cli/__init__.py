@@ -10,7 +10,7 @@ from tartarus.cli.tornado import tornado_command
 from tartarus.cli.transfer import transfer_handler
 from tartarus.cli.balance import balance_handler
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 @click.group()
 @click.version_option(version = __version__)
