@@ -24,6 +24,7 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+        default_author: github_actions
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
