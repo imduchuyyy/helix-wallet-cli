@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
-from tartarus import constants
-from tartarus.constants import PrintType
+from helix import constants
+from helix.constants import PrintType
 
 
 class Print(object):

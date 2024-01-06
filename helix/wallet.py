@@ -3,8 +3,8 @@ import os
 from eth_account import Account
 import secrets
 import json
-from tartarus import config, constants, helper
-from tartarus.print import Print
+from helix import config, constants, helper
+from helix.print import Print
 
 class Wallet():
     def __init__(self, keypair_path: str):

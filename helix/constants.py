@@ -2,7 +2,7 @@
 import os
 from enum import EnumMeta, Enum
 
-WALLET_FOLDER = ".tartarus-wallet"
+WALLET_FOLDER = ".helix-wallet"
 WALLET_PATH = os.path.join(os.path.expanduser('~'), WALLET_FOLDER)
 
 WALLET_LIST_PATH = os.path.join(WALLET_PATH, "wallet")

@@ -2,10 +2,10 @@
 import click
 import os
 from getpass import getpass
-from tartarus.wallet import Wallet
-from tartarus.config import Config
-from tartarus.print import Print
-from tartarus.constants import PrintType
+from helix.wallet import Wallet
+from helix.config import Config
+from helix.print import Print
+from helix.constants import PrintType
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 def create_wallet():

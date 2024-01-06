@@ -2,9 +2,9 @@
 import json
 import os
 import click
-from tartarus import constants
-from tartarus.config import Config
-from tartarus.print import Print
+from helix import constants
+from helix.config import Config
+from helix.print import Print
 
 config = Config()
 

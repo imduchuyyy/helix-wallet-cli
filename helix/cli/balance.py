@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 import click
-from tartarus.config import Config
-from tartarus.constants import ETH_NATIVE_ADDRESS, PrintType
-from tartarus.wallet import Wallet 
-from tartarus.print import Print
-from tartarus.token import Token
+from helix.config import Config
+from helix.constants import ETH_NATIVE_ADDRESS, PrintType
+from helix.wallet import Wallet 
+from helix.print import Print
+from helix.token import Token
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.option('-t', '--token-address', 'token_address', help="Token address", default="Native token", show_default=True)

@@ -3,12 +3,12 @@
 import click
 import os
 
-from tartarus.cli.config import config_command
-from tartarus.cli.address import get_address
-from tartarus.cli.create import create_wallet
-from tartarus.cli.tornado import tornado_command
-from tartarus.cli.transfer import transfer_handler
-from tartarus.cli.balance import balance_handler
+from helix.cli.config import config_command
+from helix.cli.address import get_address
+from helix.cli.create import create_wallet
+from helix.cli.tornado import tornado_command
+from helix.cli.transfer import transfer_handler
+from helix.cli.balance import balance_handler
 
 __version__ = "0.1.0"
 
@@ -16,7 +16,7 @@ __version__ = "0.1.0"
 @click.version_option(version = __version__)
 @click.pass_context
 def cli(ctx):
-    """Tartarus wallet: Micro wallet by Terry"""
+    """Helix wallet: By developer for developers"""
     pass
 
 cli.add_command(config_command, "config")

@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import os
 import json
-from tartarus import constants
+from helix import constants
 
 default_config = {
     "keypair_path": constants.WALLET_PATH + "/wallet" + "/id.json",

@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
-from tartarus import constants
+from helix import constants
 from web3 import Web3
-from tartarus.constants import ETH_NATIVE_ADDRESS
+from helix.constants import ETH_NATIVE_ADDRESS
 
 
 def to_checksum_address(address):
