@@ -1,0 +1,16 @@
+name: Question about project
+description: question about project
+title: '[Question]:'
+labels: ["question"]
+projects: []
+assignees: []
+
+body:
+  - type: textarea
+    id: feature
+    attributes:
+      label: Describe your question here?
+      description: |
+        Also tell us about your question
+    validations:
+      required: true
