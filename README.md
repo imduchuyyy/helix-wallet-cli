@@ -1,70 +1,13 @@
-# Mini Cool Wallet - MCWallet
-MCWallet is python script encrypt your private key. Unlike normal extension wallet, MCWallet can't connect to browser, so it can't be hack
+# Tartarus Wallet
+This is a wallet implementation that help developers secure their wallets while using scripting to confirm transactions
 
-![alt text](./assets/preview.jpg)
-
-## Set up
+## Installation
 1. Install package
 ```sh
 pip3 install -r requirements.txt
-
-```
-or 
-```sh
-pipenv sync
 ```
 
 2. Execute mod for wallet.py
 ```sh
-chmod 777 ./wallet.py
+chmod 777 ./tartarus.py
 ```
-
-## Usage
-1. Run app
-```sh
-./wallet.py
-```
-NOTE:
-By default, we use RPC from infura service to get balance and transaction. If you want to use your own node, you can change config file
-```shell
-config set --url "https://mainnet.infura.io/v3/your_api_key" --keypair-file "path/to/your/keypair/file"
-```
-
-If you not have wallet, it will create new wallet and save to file *.json by command
-```sh
- create --force
-```
-You can change url and keypair_path for your own config in `~/.tartarus-wallet/config.json` and view your wallet keypair in `~/tartarus-wallet/wallet/id.json`
-
-2. Get wallet address
-```sh
->> address
-```
-
-3. Transfer Token
-```sh
->> transfer
-```
-
-4. Reset wallet
-```sh
->> reset
-```
-
-## Test 
-1. Run test 
-```sh 
-pytest -s
-```
-
-or 
-```sh
-./quicktest.sh
-```
-
-## TODO
-1. Support tornado cash
-2. Refactor code
-
-## Thanks for use
-Donate ♥  <b>[terryyy.eth](https://etherscan.io/address/0x4FFF0f708c768a46050f9b96c46C265729D1a62f)</b>
