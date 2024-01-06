@@ -2,7 +2,7 @@
 import click
 import os
 from getpass import getpass
-from helix.wallet import Wallet
+from helix.services.wallet import Wallet
 from helix.config import Config
 from helix.print import Print
 from helix.constants import PrintType
@@ -20,8 +20,8 @@ def create_wallet():
         if is_override != 'y':
             quit()
 
-    Print()._out("Private key (default for new wallet): ")
-    private_key = getpass("")
+    Print()._out("Mnemonic (default for new wallet): ")
+    mnemonic = getpass("")
     
     Print()._out("Password (len >= 6): ")
     password = getpass("")
@@ -36,7 +36,7 @@ def create_wallet():
     if confirm_password != password:
         Print(PrintType.ERROR)._out("Password mismatch")
     else:
-        new_address = wallet.create_wallet(private_key, password, True)
+        new_address = wallet.create_wallet(mnemonic, password, True)
 
         Print(PrintType.SUCCESS)._out("Create new wallet with address " + new_address)
         print("")

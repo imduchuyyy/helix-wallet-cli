@@ -2,7 +2,7 @@
 import click
 from helix.config import Config
 from helix.constants import ETH_NATIVE_ADDRESS, PrintType
-from helix.wallet import Wallet 
+from helix.services.wallet import Wallet 
 from helix.print import Print
 from helix.token import Token
 

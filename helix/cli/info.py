@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
 import click
 from helix.config import Config 
-from helix.wallet import Wallet 
+from helix.services.wallet import Wallet 
 from helix.print import Print
-from helix.constants import ETH_NATIVE_ADDRESS, PrintType
+from helix.constants import PrintType
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 def get_address():
@@ -22,3 +22,10 @@ def get_address():
     # Print.print_success(address)
     Print()._out(message=address)
     print("")
+
+@click.group()
+def info_command():
+    """Get info of wallet"""
+    pass
+
+info_command.add_command(get_address, "address")

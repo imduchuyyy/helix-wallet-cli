@@ -3,8 +3,10 @@ import os
 from eth_account import Account
 import secrets
 import json
+from bip_utils import Bip44, Bip44Coins, Bip44Changes, Bip39MnemonicGenerator, Bip39SeedGenerator, Bip39WordsNum
 from helix import config, constants, helper
 from helix.print import Print
+from helix.services.cryptography import Cryptography
 
 class Wallet():
     def __init__(self, keypair_path: str):
@@ -28,18 +30,21 @@ class Wallet():
         return "0x" + keypair_encrypted["address"]
     
 
-    def create_wallet(self, private_key: str, password: str, is_override: bool) -> str:
-        if len(private_key) < 32:
-            private_key = "0x" + secrets.token_hex(32)
-
-        account = Account.from_key(private_key)
-        encrypted_key = Account.encrypt(private_key, password = password)
-        json_object = json.dumps(encrypted_key, indent = 4)
-        with open(self.keypair_path, "w+") as outfile:
-            outfile.write(json_object)
+    def create_wallet(self, mnemonic: str, password: str, is_override: bool) -> str:
+        if len(mnemonic) < 1:
+            mnemonic = Bip39MnemonicGenerator().FromWordsNumber(Bip39WordsNum.WORDS_NUM_24)
+            mnemonic = " ".join(mnemonic.ToList())
+        
+        encrypted_mnemonic = Cryptography.encrypt_mnemonic(mnemonic, password)
+        print(encrypted_mnemonic)
+        # account = Account.from_key(private_key)
+        # json_object = json.dumps(encrypted_key, indent = 4)
+        # with open(self.keypair_path, "w+") as outfile:
+        #     outfile.write(json_object)
 
         
-        return account.address
+        return ""
+        # return account.address
     
     def sign_and_send_transaction(self, transaction: dict) -> str: 
         pass

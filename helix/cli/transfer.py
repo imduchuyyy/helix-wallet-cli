@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import click
 from helix.config import Config 
-from helix.wallet import Wallet 
+from helix.services.wallet import Wallet 
 from helix.print import Print
 from helix.token import Token
 from helix.constants import ETH_NATIVE_ADDRESS, PrintType

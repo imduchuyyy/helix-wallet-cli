@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 import click
-import os
-
 from helix.cli.config import config_command
-from helix.cli.address import get_address
+from helix.cli.info import info_command
 from helix.cli.create import create_wallet
 from helix.cli.tornado import tornado_command
 from helix.cli.transfer import transfer_handler
@@ -20,7 +18,7 @@ def cli(ctx):
     pass
 
 cli.add_command(config_command, "config")
-cli.add_command(get_address, "address")
+cli.add_command(info_command, "info")
 cli.add_command(create_wallet, "create")
 cli.add_command(tornado_command, "tornado")
 cli.add_command(transfer_handler, "transfer")
